@@ -1,0 +1,80 @@
+{% extends "sign/sign_base.html" %}
+
+{% block content %}
+<span style="font-size: large; background-color: yellow;">
+    <a href="#type" onclick="get_help('signrenesas_dbg')">Get Help</a> |
+    <!-- <a href="#type" onclick="get_help('restapi_renesas_ic')">Rest API</a> -->
+    <a href="/res/RTCRC0000SG31LCS00_UM_1_0_0_dbg"> Renesas Secure Debug Signing Tool User Manual</a> |
+</span>
+<fieldset>
+    <legend>Debug info</legend>
+    {% include  "key/key_gen_renesas_dbg.html" %}
+</fieldset>
+<fieldset>
+    <legend>Secondary key info</legend>
+<table style="border-spacing: 0 1em;">
+
+    <tr>
+        <td class="tdheader">{{key_title}}:</td>
+        <td class="tdcontent"><select name="key_id">
+            {% for key in key_list %}
+              <option value="{{ key.id }}"
+                {% if key.isdefault %}
+                selected
+                {% endif %}
+                >
+                {{ key.name }} 
+                {% if key.isdefault %}
+                (default)
+                {% endif %}
+                | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+              </option>
+            {% endfor %}
+            </select>
+        </td>
+        <td class="tdcontent">
+             <a href="/view_key?tool={{ signtoolname }}&keytool={{ keytoolname }}" target="_blank">View</a> 
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">Socid file</td>
+        <td><input type="file" name="socid" style="width: 100%;">
+        </td>
+        <td class="tdcontent">
+            Binary file holding the 32 byte SOC_ID
+        <br/>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">Socid (hex string)</td>
+        <td class="tdcontent">
+            <textarea id="socid_val" name="socid_val" cols="50" rows="5" placeholder="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef" style="width: 100%;"></textarea></td>
+
+        <td class="tdcontent"> 
+            Input hex string if you don't upload socid file. It must be 64 characters (~32 bytes)
+            If both socid file and socid string are specified, socid file will be used.
+        </td>
+        </td>
+    </tr>
+</table>
+
+</fieldset>
+<div>
+    <!-- <ul>Sample for using RestAPI: <a href="/res/signrenesas">signrenesas</a> | <a href="/help/restapi_renesas">Help</a></ul>
+    <ul>Sample code to integrate to build script:<a href="/res/mhu_yocto_script_build_sign">mhu_yocto_script_build_sign</a></ul> -->
+    <ul>Output: 
+        <ul>- <b>&lt;socid file name&gt;_cert.bin: Final certificate package (Primary and Secondary) output file. Binary format.</b></ul>
+        <ul>- &lt;socid file name&gt;.hash: Hash data output file. Binary format</ul>
+        <ul>- sb_dbg_prim_cert.bin: Primary Key certificate used to sign</ul>
+        <ul>- sb_dbg_sec_cert.cfg: Configuration used to sign</ul>
+        <ul>- uploaded_bin/*: Contains uploaded binaries</ul>
+    </ul>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type=text/javascript src="{{
+    url_for('static', filename='js/key_gen_pri_dbg.js') }}"></script>
+<!-- <script type=text/javascript src="{{
+    url_for('static', filename='js/sign_renesas_dbg.js') }}"></script> -->
+{% endblock %}

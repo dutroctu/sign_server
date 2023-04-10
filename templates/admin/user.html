@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <title>User information</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/w3.css') }}">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/common.css') }}">
+    </head>
+    <body>
+        {% include  "header.html" %}
+        {% if login %}        
+            <table>
+                <tr>
+                    <td class="tdheader">Username</td>
+                    <td>{{ user.username }}</td>
+                </tr>
+                <tr>
+                    <td class="tdheader">Full Name</td>
+                    <td>{{ user.fullname }}</td>
+                </tr>
+                <tr>
+                    <td class="tdheader">Email</td>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <td class="tdheader">Phone</td>
+                    <td>{{ user.phone }}</td>
+                </tr>
+                <tr>
+                    <td class="tdheader">Type</td>
+                    <td>{{ user.type_str }}</td>
+                </tr>
+                <tr>
+                    <td class="tdheader">Status</td>
+                    <td>{{ user.status_str }}</td>
+                </tr>
+                <tr>
+                    <td class="tdheader">Note</td>
+                    <td>{{ user.note }}</td>
+                </tr>
+                <tr>
+                    <td class="tdheader">Signature</td>
+                    <td>{{ signature }}</td>
+                </tr>
+                <tr>
+                    <td class="tdheader">History</td>
+                    <td>{{ user.history }}</td>
+                </tr>
+            </table>
+            <fieldset>
+                <legend>SSH id-rsa key list</legend>
+                <table>
+                    {% for fid,rsa in rsa_list.items() %}
+                    <tr>
+                        <td><textarea name="txt_{{ fid }}" cols="50" rows="5" disabled>{{ rsa }}</textarea></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </fieldset>
+        {% else %}
+        <div>Not login yet, please login: <a href="/login">Login</a></div>
+        {% endif %}
+        {% include  "footer.html" %}
+    </body>
+</html>

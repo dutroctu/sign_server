@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <title>List of Key</title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/w3.css') }}">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/common.css') }}">
+
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/jquery.min.js') }}"></script>
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/list_key.js') }}"></script>
+    </head>
+    <body>
+        {% include  "header.html" %}
+        {% if login %}        
+        <table border="1">
+            <tr>
+                <td class="tdheader">Id</td>
+                <td class="tdheader">Root KeyId</td>
+                <td class="tdheader">Name</td>
+                <td class="tdheader">Title</td>
+                <td class="tdheader">Status</td>
+                <td class="tdheader">Tag</td>
+                <td class="tdheader">Alg</td>
+                <td class="tdheader">Data type</td>
+                <td class="tdheader">Hint</td>
+                <td class="tdheader">Project</td>
+                <td class="tdheader">Model</td>
+                <td class="tdheader">Created date</td>
+                <td class="tdheader">Last updated</td>
+                <td class="tdheader">History</td>
+                <td class="tdheader">Download</td>
+                <td class="tdheader">Action</td>
+            </tr>
+            {% for key in key_list %}
+            <tr name="{{ key.id }}">
+                <td class="tdheader">{{ key.id }}</td>
+                <td class="tdheader">{{ key.rootKeyId }}</td>
+                <td class="tdheader">{{ key.name }}</td>
+                <td class="tdheader">{{ key.title }}</td>
+                <td class="tdheader">{{ key.status }}</td>
+                <td class="tdheader">{{ key.tag }}</td>
+                <td class="tdheader">{{ key.alg }}</td>
+                <td class="tdheader">{{ key.data_type }}</td>
+                <td class="tdheader">{{ key.hint }}</td>
+                <td class="tdheader">{{ key.project }}</td>
+                <td class="tdheader">{{ key.model }}</td>
+                <td class="tdheader">{{ key.created_time }}</td>
+                <td class="tdheader">{{ key.last_update_time }}</td>
+                <td class="tdheader">{{ key.history }}</td>
+                <td class="tdheader"><a href="/download_key/{{ key.id }}">Download</a></td>
+                <td class="tdheader"><a href="#{{ key.id }}" onclick="delete_key('{{ key.id }}','{{ key.name }}')">Delete</a></td>
+            </tr>
+            {% endfor %}
+            
+        </table>
+        {% else %}
+        <div>Not login with proper account yet, please login: <a href="/login">Login</a></div>
+        {% endif %}
+
+        <!-- Loading div -->
+        {% include  "loading.html" %}
+        <!-- result dialog div -->
+        {% include  "dialog.html" %}
+        {% include  "footer.html" %}
+    </body>
+</html>

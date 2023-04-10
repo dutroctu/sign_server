@@ -1,0 +1,100 @@
+<html>
+    <head>
+        <title>FOTA generation</title>
+        <style>
+            fieldset {
+                display: block;
+                margin-left: 2px;
+                margin-right: 2px;
+                margin-top: 10px;
+                padding-top: 0.35em;
+                padding-bottom: 0.625em;
+                padding-left: 0.75em;
+                padding-right: 0.75em;
+                border: 2px groove (internal value);
+            }
+            
+            legend {
+              background-color: gray;
+              color: white;
+              padding: 5px 10px;
+            }
+            
+            input {
+              margin: 5px;
+            }
+            
+            select {
+              width:  500px;
+            }
+            .tdheader {
+                width:  100px;
+            }
+            </style>
+    </head>
+    <body>
+        {% include  "header.html" %}
+        {% if login %}        
+            <!-- <p>Signed in as <b><u>{{ user }}</u></b> .... <a href="/signout">Sign out</a></p> -->
+            <form  method='post' enctype="multipart/form-data">
+                <fieldset>
+                    <legend>Common options</legend>
+                <table>
+                    <tr>
+                        <td class="tdheader">Model:</td>
+                        <td><select name="model">
+                            {% for o in model_list %}
+                              <option name="{{ o }}">{{ o }}</option>
+                            {% endfor %}
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Project:</td>
+                        <td><select name="model">
+                            {% for o in project_list %}
+                              <option name="{{ o }}">{{ o }}</option>
+                            {% endfor %}
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Output as zip:</td>
+                        <td>
+                            <!-- TODO: TO BE ENABLE -->
+                            <input type="checkbox" name="zip_output">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Key type:</td>
+                        <td><select name="key_type">
+                            {% for o in key_type_list %}
+                              <option name="{{ o }}">{{ o }}</option>
+                            {% endfor %}
+                            </select></td>
+                    </tr>
+                </table>
+                </fieldset>
+                {% for module in module_list %}
+                <fieldset>
+                    <legend>{{ module }} options</legend>
+                    <div>
+                        Firmware Version:
+                        <input type="text" name="ver_{{ module }}">
+                    </div>
+                    <div>
+                        All firmware binanries are in single zip file?: <input type="checkbox" name="zip_{{ module }}">
+                    </div>
+                    <div>
+                    <p>Select firmware files (zip file if firmwares are zip):</p>
+                    <input type="file" name="{{ module }}" multiple="true">
+                    </div>
+                </fieldset>
+                {% endfor %}
+                <div></div>
+                <p><input type="submit" value="Submit"></p>
+            </form>
+        {% else %}
+        <div>Not login yet, please login: <a href="/login">Login</a></div>
+        {% endif %}
+        {% include  "footer.html" %}
+    </body>
+</html>

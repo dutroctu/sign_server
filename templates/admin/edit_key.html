@@ -1,0 +1,119 @@
+<html>
+    <head>
+        <title>Edit Key</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/w3.css') }}">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/common.css') }}">
+        <script type=text/javascript src="{{
+            url_for('static', filename='js/jquery.min.js') }}"></script>
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/common.js') }}"></script>
+        <script type=text/javascript src="{{
+            url_for('static', filename='js/edit_key.js') }}"></script>
+    </head>
+    <body>
+        {% include  "header.html" %}
+        {% if login %}        
+            <form  method='post' enctype="multipart/form-data" id="edit_key" action="#">
+                <table>
+                    <tr>
+                        <td class="tdheader">ID</td>
+                        <td><input type="text" id="id" name="id"  value="{{ key.id }}" disabled/></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Root ID</td>
+                        <td><input type="text" id="rootid" name="id"  value="{{ key.rootKeyId }}" disabled/></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Name</td>
+                        <td><input type="text" id="name" name="name"  value="{{ key.name }}" disabled/></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Title</td>
+                        <td><input type="text" id="name" name="name"  value="{{ key.title }}" disabled/></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Status</td>
+                        <td><input type="text" id="status" name="status"  value="{{ status }}" disabled/></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Project</td>
+                        <td><input type="text" id="project" name="project"  value="{{ key.project }}" disabled/></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Model</td>
+                        <td><input type="text" id="model" name="model"  value="{{ key.model }}" disabled/></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Sign tool</td>
+                        <td><input type="text" id="target_tool" name="target_tool"  value="{{ key.target_tool }}" disabled/></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Key Tool</td>
+                        <td><input type="text" id="target_keytool" name="target_keytool"  value="{{ key.target_keytool }}" disabled/></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">History</td>
+                        <td><textarea name="history" cols="50" rows="5" disabled>{{ key.history }}</textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Signature</td>
+                        <td><textarea name="policy" cols="50" rows="5" disabled>{{ signature }}</textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Policy</td>
+                        <td><textarea name="policy" cols="50" rows="5" disabled>{{ key.policy }}</textarea>
+                            <button type="button" onclick="del_policy()">Clear all Policy</button></td>
+                    </tr>
+                   
+                </table>
+                
+                <div></div>
+                <!-- <p><input type="submit" value="Submit"></p> -->
+            </form>
+            
+            <a href="/download_key/{{ key.id }}">Download key files</a>
+            <form  method='post' enctype="multipart/form-data" id="add_policy" action="#">
+            <fieldset>
+                <legend>Policy </legend>
+                
+                <table>
+                    <tr>
+                        <td class="tdheader">UserName</td>
+                        <td><input type="text" id="username" name="username" /></td>
+                    </tr>
+                    <tr>
+                        <td>IP</td>
+                        <td><input type="text" id="remoteIP" name="remoteIP"></td>
+                    </tr>
+                    <tr>
+                        <td>Action</td>
+                        <td><select id="action" name="action">
+                            {% for action in action_list %}
+                              <option value="{{ action }}">{{ action }}</option>
+                            {% endfor %}
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>Rsa</td>
+                        <td><textarea id="rsa" name="rsa" cols="50" rows="5" ></textarea></td>
+                    </tr>
+                </table>
+                <!-- <p><input type="submit" value="add_policy"></p> -->
+                <button type="button" onclick="add_policy()">Add Policy</button>
+            </fieldset>
+            </form>
+        {% else %}
+        <div>Not login as admin yet, please login with admin account: <a href="/login">Login</a></div>
+        {% endif %}
+
+
+        <!-- Loading div -->
+        {% include  "loading.html" %}
+        <!-- result dialog div -->
+        {% include  "dialog.html" %}
+        {% include  "footer.html" %}
+    </body>
+</html>

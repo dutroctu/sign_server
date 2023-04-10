@@ -1,0 +1,12 @@
+<div class="w3-container" style="padding-top: 10px;padding-bottom: 10px">
+    <a href="/">Home</a> 
+    | <a href="/help" target="_blank">Help</a>
+    {% if login %}  
+    | <a href="/account/{{ username }}">Login as {{ username }}</a>
+    | <a href="/changepass">Change password</a>
+    | <a href="/logout">Sign out</a>
+    {% else %}
+    | <a href="/login">Login in</a>
+    | Ask admin to create account if don't have
+    {% endif %}
+</div>

@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <title>Add user</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/w3.css') }}">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/common.css') }}">
+        <script type=text/javascript src="{{
+            url_for('static', filename='js/jquery.min.js') }}"></script>
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/common.js') }}"></script>
+        <script type=text/javascript src="{{
+            url_for('static', filename='js/add_user.js') }}"></script>
+    </head>
+    <body>
+        {% include  "header.html" %}
+        {% if login %}        
+            <!-- <p>Signed in as <b><u>{{ user }}</u></b> .... <a href="/signout">Sign out</a></p> -->
+            <form  method='post' enctype="multipart/form-data" id="add_user">
+                <table>
+                    <tr>
+                        <td class="tdheader">Username</td>
+                        <td><input type="text" name="name" minlength=4 maxlength=20></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Full Name</td>
+                        <td><input type="text" name="fullname" minlength=4 maxlength=30></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Email</td>
+                        <td><input type="email" name="email" minlength=4 maxlength=30></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Phone</td>
+                        <td><input type="tel" name="phone" minlength=4 maxlength=20></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Account type</td>
+                        <td><select name="type">
+                            {% for id, value in account_type.items() %}
+                              <option value="{{ id }}">{{ value }}</option>
+                            {% endfor %}
+                            </select></td>
+                    </tr>
+                </table>
+
+                <div></div>
+                <p><input type="submit" value="Submit"></p>
+            </form>
+        {% else %}
+        <div>Not login as admin yet, please login with admin account: <a href="/login">Login</a></div>
+        {% endif %}
+
+
+        <!-- Loading div -->
+        {% include  "loading.html" %}
+        <!-- result dialog div -->
+        {% include  "dialog.html" %}
+        {% include  "footer.html" %}
+    </body>
+</html>

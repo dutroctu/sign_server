@@ -1,0 +1,96 @@
+{% extends "sign/sign_base.html" %}
+
+{% block content %}
+<table>
+    <tr>
+        <td class="tdheader">Extra params to sign target</td>
+        <td><input type="text" name="command"><a href="#command" onclick="get_help('signandroid')">Help</a></td>
+    </tr>
+    <tr >
+        <td class="tdheader">Android version:</td>
+        <td><select name="version">
+            {% for id, value in android_versions.items() %}
+              <option value="{{ id }}">{{ value }}</option>
+            {% endfor %}
+            </select><a href="#avbtarget" onclick="get_help('signandroid')">Help</a></td>
+    </tr>
+    <tr>
+        <td class="tdheader">Generate OTA</td>
+        <td><input type="checkbox" name="ota"></td>
+    </tr>
+    <tr>
+        <td class="tdheader">Extra params to generate OTA</td>
+        <td><input type="text" name="command_ota"></td>
+    </tr>
+    <tr>
+        <td class="tdheader">Generate Images</td>
+        <td><input type="checkbox" name="image"></td>
+    </tr>
+    <tr>
+        <td class="tdheader">Platform key:</td>
+        <td><select name="platform_key_id">
+            <option value="{{ default_key_id }}">Default</option>
+            {% for key in platform_key_list %}
+              <option value="{{ key.id }}">
+                {{ key.name }} 
+                {% if key.isdefault %}
+                (default)
+                {% endif %}
+                | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+
+
+              </option>
+            {% endfor %}
+            </select>
+             | <a href="/view_key?tool={{ toolname }}" target="_blank">View</a> | <a href="#type" onclick="get_help('signandroid')">Help</a> | <b>WARNING: Carrefully when select DEFAULT</b>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">AVB key:</td>
+        <td><select name="avb_key_id">
+            <option value="{{ default_key_id }}">Default</option>
+            {% for key in avb_key_list %}
+              <option value="{{ key.id }}">
+                {{ key.name }} 
+                {% if key.isdefault %}
+                (default)
+                {% endif %}
+                | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+
+
+              </option>
+            {% endfor %}
+            </select>
+             | <a href="/view_key?tool={{ toolname }}" target="_blank">View</a> | <a href="#type" onclick="get_help('signandroid')">Help</a> | <b>WARNING: Carrefully when select DEFAULT</b>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">OTA key:</td>
+        <td><select name="ota_key_id">
+            <option value="{{ default_key_id }}">Default</option>
+            {% for key in ota_key_list %}
+              <option value="{{ key.id }}">
+                {{ key.name }} 
+                {% if key.isdefault %}
+                (default)
+                {% endif %}
+                | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+
+
+              </option>
+            {% endfor %}
+            </select>
+             | <a href="/view_key?tool={{ toolname }}" target="_blank">View</a> | <a href="#type" onclick="get_help('signandroid')">Help</a> | <b>WARNING: Carrefully when select DEFAULT</b>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">Target file zip:</td>
+        <td><input type="file" name="image"></td>
+    </tr>
+    <tr>
+        <td class="tdheader">Additional files (i.e. dtb.img):</td>
+        <td><input type="file" name="imagex"></td>
+    </tr>
+</table>
+
+{% endblock %}

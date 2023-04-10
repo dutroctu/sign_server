@@ -1,0 +1,66 @@
+{% extends "sign/sign_base.html" %}
+
+{% block content %}
+<span style="font-size: large; background-color: yellow;">
+    <a href="#type" onclick="get_help('signcommon')">Get Help</a> |
+    <a href="#type" onclick="get_help('restapi_common')">Rest API</a>
+</span>
+<table style="border-spacing: 0 1em;">
+    <tr>
+        <td class="tdheader">Command list</td>
+        <td><select name="command" id="command">
+            {% for id,cmd in cmd_list.items() %}
+              <option value="{{ id }}">{{ cmd.id }}|{{ cmd.name }}</option>
+            {% endfor %}
+            </select>| <a href="#command" onclick="get_command_help('{{ keytoolname }}')">Help</a></td>
+    </tr>
+   
+    <tr>
+        <td class="tdheader">Target Key tool:</td>
+        <td><select id="keytool"  name="keytool" onchange="get_key_list()">
+            {% for name,desc in keytool_list.items() %}
+
+            <option value="{{ name }}"
+            >{{ desc[1] }}</option>
+            {% endfor %}
+            </select> </td>
+    </tr>
+
+    <tr>
+        <td class="tdheader">Key:</td>
+        <td class="tdcontent"><select id="key_id" name="key_id">
+            <!-- <option value="{{ default_key_id }}">Default</option> -->
+            <!-- {% for key in key_list %}
+              <option value="{{ key.id }}">
+                {{ key.name }} 
+                | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+              </option>
+            {% endfor %} -->
+            </select>
+             | <a href="#key_id" onclick="viewListKey()" >View</a> | <a href="#type" onclick="get_help('signcommon')">Help</a></b>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">Extra data</td>
+        <td><input type="text" name="data"> </td>
+    </tr>
+    <tr>
+        <td class="tdheader">Data to sign/encrypt</td>
+        <td><input type="text" name="data2sign"> (not use if file upload is used)</td>
+    </tr>
+    <tr>
+        <td class="tdheader">File upload (used when ):</td>
+        <td><input type="file" name="image"></td>
+    </tr>
+
+    <tr>
+        <td class="tdheader"></td>
+        <td>If file is used or select out as zip, result is returned as files. If "data to sign" is used and not output as zip, result shall be in responsed message. Response is encoded base64 </td>
+    </tr>
+</table>
+
+{% endblock %}
+{% block script %}
+<script type=text/javascript src="{{
+    url_for('static', filename='js/sign_common.js') }}"></script>
+{% endblock %}

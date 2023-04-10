@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <title>Manual sign</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/w3.css') }}">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/common.css') }}">
+
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/jquery.min.js') }}"></script>
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/help.js') }}"></script>
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/common.js') }}"></script>
+            {% block script %}{% endblock %}
+    </head>
+    <body>
+        {% include  "header.html" %}
+        {% if login %}
+            <h1>{{ module }}</h1>
+            <!-- <p>Signed in as <b><u>{{ user }}</u></b> .... <a href="/signout">Sign out</a></p> -->
+            <form  method='post' enctype="multipart/form-data">
+                <fieldset>
+                    <legend>Common options</legend>
+                <table>
+                    <tr>
+                        <td class="tdheader">Model:</td>
+                        <td><select name="model">
+                            {% for o in model_list %}
+                              <option name="{{ o }}">{{ o }}</option>
+                            {% endfor %}
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Project:</td>
+                        <td><select name="project">
+                            {% for o in project_list %}
+                              <option name="{{ o }}">{{ o }}</option>
+                            {% endfor %}
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Output as zip:</td>
+                        <td>
+                            <!-- TODO: TO BE ENABLE -->
+                            <input type="checkbox" name="zip_output">
+                        </td>
+                    </tr>
+                </table>
+                </fieldset>
+                <fieldset>
+                    <legend>{{ module }} options</legend>
+                    {% block content %}{% endblock %}
+                </fieldset>
+                <div></div>
+                <!-- <fieldset>
+                    <legend>File upload</legend>
+                    <p><input type="file" name="file"></p>
+                    <p><input type="submit" value="Submit"></p>
+                </fieldset> -->
+                <p><input type="submit" value="Submit"></p>
+            </form>
+        {% else %}
+        <div>Not login yet, please login: <a href="/login">Login</a></div>
+        {% endif %}
+        <!-- Loading div -->
+        {% include  "loading.html" %}
+        <!-- result dialog div -->
+        {% include  "dialog.html" %}
+        {% include  "footer.html" %}
+    </body>
+</html>

@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Download file</title>
+    </head>
+    <body>
+        {% include  "header.html" %}
+        <br/>
+        <br/>
+        {% if  login %}
+        
+        <!-- <p>Signed in as <b><u>{{ user }}</u></b> .... <a href="/signout">Sign out</a></p> -->
+            <p>{{ note }}</p>
+            List of File:
+            {% for file in files %}
+            <ul><a href="/download/{{ download_id }}?fname={{ file }}" target="blank">{{ file }}</a></ul>
+            {% endfor %}
+        {% else %}
+            <div>Not login yet, please login: <a href="/login">Login</a></div>
+        {% endif %}
+        {% include  "footer.html" %}
+    </body>
+</html>

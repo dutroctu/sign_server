@@ -1,0 +1,38 @@
+{% extends "sign/sign_base.html" %}
+
+{% block content %}
+<table>
+    <tr>
+        <td class="tdheader">Sign tool:</td>
+        <td><select name="tool">
+            {% for id,name in apk_sign_tool_list.items() %}
+              <option value="{{ id }}">{{ name }}</option>
+            {% endfor %}
+            </select><a href="#type" onclick="get_help('signapk')">Help</a></td>
+    </tr>
+    
+    <tr>
+        <td class="tdheader">Sign Key:</td>
+        <td><select name="key_id">
+            <option value="{{ default_key_id }}">Default</option>
+            {% for key in key_list %}
+              <option value="{{ key.id }}">
+                {{ key.name }} 
+                {% if key.isdefault %}
+                (default)
+                {% endif %}
+                | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+
+              </option>
+            {% endfor %}
+            </select>
+             | <a href="/view_key" target="_blank">View</a> | <a href="#type" onclick="get_help('signing')">Help</a> | <b>WARNING: Carrefully when select DEFAULT</b>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">File upload:</td>
+        <td><input type="file" name="image"></td>
+    </tr>
+</table>
+
+{% endblock %}

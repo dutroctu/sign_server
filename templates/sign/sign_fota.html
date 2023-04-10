@@ -1,0 +1,72 @@
+{% extends "sign/sign_base.html" %}
+
+{% block content %}
+<table>
+    <tr>
+        <td class="tdheader">Type:</td>
+        <td><select name="type">
+            {% for o in type_list %}
+              <option name="{{ o }}">{{ o }}</option>
+            {% endfor %}
+            </select></td>
+    </tr>
+    <tr>
+        <td class="tdheader">Algorithm:</td>
+        <td><select name="algo_id">
+            {% for o in algo_list %}
+              <option name="{{ o }}">{{ o }}</option>
+            {% endfor %}
+            </select></td>
+    </tr>
+    <tr>
+        <td class="tdheader">Is separate:</td>
+        <td>
+            <!-- TODO: TO BE ENABLE -->
+            <input type="checkbox" name="is_separate" disabled="1">
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">Encryption key:</td>
+        <td><select name="enc_key_id">
+            <option value="{{ default_key_id }}">Default</option>
+            {% for key in enc_key_list %}
+              <option value="{{ key.id }}">
+                {{ key.name }} 
+                {% if key.isdefault %}
+                (default)
+                {% endif %}
+                | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+
+
+              </option>
+            {% endfor %}
+            </select>
+             | <a href="/view_key" target="_blank">View</a> | <a href="#type" onclick="get_help('signing')">Help</a> | <b>WARNING: Carrefully when select DEFAULT</b>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">Sign key:</td>
+        <td><select name="sign_key_id">
+            <option value="{{ default_key_id }}">Default</option>
+            {% for key in sign_key_list %}
+              <option value="{{ key.id }}">
+                {{ key.name }} 
+                {% if key.isdefault %}
+                (default)
+                {% endif %}
+                | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+
+
+              </option>
+            {% endfor %}
+            </select>
+             | <a href="/view_key" target="_blank">View</a> | <a href="#type" onclick="get_help('signing')">Help</a> | <b>WARNING: Carrefully when select DEFAULT</b>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">File upload:</td>
+        <td><input type="file" name="image"></td>
+    </tr>
+</table>
+
+{% endblock %}

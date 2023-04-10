@@ -1,0 +1,23 @@
+<html>
+<head>
+    <title>Help</title>
+    <meta http-equiv=Content-Type content="text/html; charset=us-ascii">
+</head>
+<body>
+{% include  "header.html" %}
+<h2> Resource List </h2>
+<table>
+{% for key, value in doc_list.items() %}
+{% if value is not none %}
+    <tr>
+        <td>* </td>
+        <td style="padding:5px; padding-right: 20px;"><a href='res/{{ key }}'>{{ key }} </a></td>
+        <td>: {{ value }}</td>
+    </tr>
+{% endif %}
+{% endfor %}
+</table>
+
+{% include  "footer.html" %}
+</body>
+</html>

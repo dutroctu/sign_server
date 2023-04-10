@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <title>Add key</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/w3.css') }}">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/common.css') }}">
+
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/jquery.min.js') }}"></script>
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/common.js') }}"></script>
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/help.js') }}"></script>
+            {% block script %}{% endblock %}
+    </head>
+    <body>
+        {% include  "header.html" %}
+        {% if login %}
+            <h1>{{ module }}</h1>
+            <!-- <p>Signed in as <b><u>{{ user }}</u></b> .... <a href="/signout">Sign out</a></p> -->
+            <form  method='post' enctype="multipart/form-data">
+                <fieldset>
+                    <legend>Common options</legend>
+                <table>
+                    <tr>
+                        <td class="tdheader">Name</td>
+                        <td><input type="text" name="name"> (should not include special character like /:*?;&lt;&gt; |"'\)</td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Title</td>
+                        <td><input type="text" name="title"></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">tag</td>
+                        <td><input type="text" name="tag"></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">hint</td>
+                        <td><input type="text" name="hint"></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Model:</td>
+                        <td><select name="model" multiple>
+                            <option name="{{ modelany }}">{{ modelany }}</option>
+                            {% for o in model_list %}
+                              <option name="{{ o }}">{{ o }}</option>
+                            {% endfor %}
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Project:</td>
+                        <td><select name="project" multiple>
+                            <option name="{{ modelany }}">{{ modelany }}</option>
+                            {% for o in project_list %}
+                              <option name="{{ o }}">{{ o }}</option>
+                            {% endfor %}
+                            </select></td>
+                    </tr>
+                </table>
+                </fieldset>
+                <fieldset>
+                    <legend>{{ module }} options</legend>
+                    {% block content %}{% endblock %}
+                </fieldset>
+                <div></div>
+                <p><input type="submit" value="Submit"></p>
+            </form>
+        {% else %}
+        <div>Not login yet, please login: <a href="/login">Login</a></div>
+        {% endif %}
+        <!-- Loading div -->
+        {% include  "loading.html" %}
+        <!-- result dialog div -->
+        {% include  "dialog.html" %}
+        {% include  "footer.html" %}
+    </body>
+</html>

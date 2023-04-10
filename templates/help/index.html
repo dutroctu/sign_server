@@ -1,0 +1,18 @@
+<html>
+<head>
+    <title>Help</title>
+    <meta http-equiv=Content-Type content="text/html; charset=us-ascii">
+</head>
+<body>
+{% include  "header.html" %}
+<h2> Help </h2>
+{% for key, value in doc_list.items() %}
+{% if value is not none %}
+<p> <a href='help/{{ key }}'>{{ value }} </a></p>
+{% endif %}
+{% endfor %}
+
+
+{% include  "footer.html" %}
+</body>
+</html>

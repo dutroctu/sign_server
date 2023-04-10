@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title>Setup</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/w3.css') }}">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/common.css') }}">
+
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/jquery.min.js') }}"></script>
+                <script type=text/javascript src="{{
+                    url_for('static', filename='js/common.js') }}"></script>
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/setup.js') }}"></script>
+    </head>
+    <body>
+        <div style="padding: 10px;"> Server not finishing initializing yet.</div>
+        {% if needlogindb %}
+        <div style="padding: 10px;"> Failed to init db, did you login db?</div>
+        
+        {% else %}
+            {% if needsetup %}
+            <form  method='post' enctype="multipart/form-data" id="setup">
+                <table>
+                        <tr>
+                            <td class="tdheader">Database</td>
+                            <td><input type="password" name="database" id="database"></td>
+                        </tr>
+                        {% if needsetupdb %}
+                        <tr>
+                            <td class="tdheader">Confirm Database</td>
+                            <td><input type="password" name="database2" id="database2"></td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td class="tdheader">Storage</td>
+                            <td><input type="password" name="storage" id="storage"></td>
+                        </tr>
+                        {% if needsetupfile %}
+                        <tr>
+                            <td class="tdheader">Confirm Storage</td>
+                            <td><input type="password" name="storage2" id="storage2"></td>
+                        </tr>
+                        {% endif %}
+                    <tr>
+                </table>
+                <div></div>
+                <p><input type="submit" value="Submit"></p>
+            </form>
+            <!-- Loading div -->
+            {% include  "loading.html" %}
+            <!-- result dialog div -->
+            {% include  "dialog.html" %}
+            {% else %}
+            <div><a href="/">Go to Home</a> </div>
+            {% endif %}
+        {% endif %}
+    </body>
+</html>

@@ -1,0 +1,9 @@
+.input/
+.output/
+.download/
+.key/
+.encstorage/
+.data/
+.tmp/
+.build/
+.dist/

@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>Admin - Monitor Storage</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/w3.css') }}">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/common.css') }}">
+
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/jquery.min.js') }}"></script>
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/help.js') }}"></script>
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/common.js') }}"></script>
+                <script type=text/javascript src="{{
+                    url_for('static', filename='js/monitor_storage.js') }}"></script>
+    </head>
+    <body>
+        {% include  "header.html" %}
+        <br/>
+        <br/>
+        {% if  login %}
+        <div style="white-space: pre-line;">
+            - Auto delete file time (ms): {{auto_delete_time}} (auto delete download file after signing, etc.)
+            - Run-time directory:
+            <li>Data dir: {{datadir}}</li>
+            <li>Tmp dir: {{tmpdir}}</li>
+            <li>Input dir: {{inputdir}}</li>
+            <li>Output dir: {{outputdir}}</li>
+            <li>Download dir: {{downloaddir}}</li>
+            <li>Log dir: {{logdir}}</li>
+
+        </div>
+        <div style="display: table-cell;vertical-align: middle;">
+            <button onclick="check_storage()">Check Storage</button> 
+            <button onclick="check_req_queue()">Check Request Queue</button> 
+            <div>
+                <button  onclick="clean_up_download()">Clean up download</button><input id="txtNumDelDay" type="number" value="6" min="{{min_day}}" max="{{max_days}}"/>
+                Days: Delete folder older that this 'days', in range [{{min_day}},{{max_days}}]
+            </div>
+        </div>
+        <div id="divResult" style="white-space: pre-line;">
+            [Checking result]
+        </div>
+
+        {% else %}
+            <div>Not login as admin yet, please login with admin account: <a href="/login">Login</a></div>
+        {% endif %}
+        {% include  "footer.html" %}
+        <!-- Loading div -->
+        {% include  "loading.html" %}
+    </body>
+</html>

@@ -1,0 +1,99 @@
+{% extends "key/key_gen_base.html" %}
+
+{% block content %}
+<table>
+    <tr>
+        <td class="tdheader">The number of key (1-4):</td>
+        <td><input type="number" name="num_key" min="1" max="4" value="1" disabled/></td>
+    </tr>
+    <tr>
+        <td class="tdheader">NV counter id</td>
+        <td><select name="nv_counter_id">
+              <option value="1">Trusted (NV value 0-31)</option>
+              <option value="2">Non-Trusted (NV value 0-223)</option>
+            </select></td>
+    </tr>
+    <tr>
+        <td class="tdheader">NV counter value</td>
+        <td><input type="number" name="nv_counter_val" min="0" max="223" value="0"/>(0-31: Trusted, 0-223: Non-Trusted)</td>
+    </tr>
+    <tr>
+        <td class="tdheader">HBK id:</td>
+        <td><input type="number" name="hbkid" disabled value="2"/></td>
+    </tr>
+
+    <tr>
+        <td class="tdheader">Target sign tool:</td>
+        <td><select name="tool" multiple disable>
+            <option value="{{ toolname }}"
+            selected="selected"
+            >{{ tooldesc }}</option>
+            </td>
+    </tr>
+</table>
+
+<div>
+    <fieldset>
+        <legend>Root Key</legend>
+    <table>
+        <tr>
+            <td class="tdheader">Select root key:</td>
+            <td><select name="cert-keypair1">
+                {% for key in root_key_list %}
+                  <option value="{{ key.id }}">
+                    {{ key.name }} 
+                    {% if key.isdefault %}
+                    (default)
+                    {% endif %}
+                    | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+                  </option>
+                {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdheader">Upload root key :</td>
+            <td><input type="file" name="cert-keypair1">(if <b>not use</b> key in above list)</td>
+        </tr>
+        <tr><td></td><td>Uploading key will <b>override</b> selected key in list</td></tr>
+        <tr>
+            <td class="tdheader">Password of root key if any</td>
+            <td><input type="password" name="cert-keypair-pwd1"></td>
+        </tr>
+    </table>
+</fieldset>
+
+<div>
+    <fieldset>
+        <legend>Next cert public key</legend>
+    <table>
+        
+        <tr>
+            <td class="tdheader">Select existing keycert:</td>
+            <td><select name="next-cert-pubkey">
+                <option value="{{ default_cert_key_id }}">{{ default_cert_key_id }}</option>
+                {% for key in key_cert_list %}
+                  <option value="{{ key.id }}">
+                    {{ key.name }} 
+                    {% if key.isdefault %}
+                    (default)
+                    {% endif %}
+                    | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+                  </option>
+                {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdheader">Upload keys (pub+priv):</td>
+            <td><input type="file" name="next-cert-pubkey"> (if <b>not use</b> key in above list, if <b>NONE</b> are use, auto generate new keypair)</td>
+        </tr>
+        <tr><td></td><td>Uploading key will <b>override</b> selected key in list</td></tr>
+        <tr>
+            <td class="tdheader">Password</td>
+            <td><input type="password" name="next-cert-pubkey-pwd">  (if auto generate new keypair)</td>
+        </tr>
+    </table>
+</fieldset>
+</div>
+{% endblock %}

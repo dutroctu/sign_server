@@ -1,0 +1,67 @@
+<table style="border-spacing: 0 1em;">
+    <tr>
+        <td class="tdheader">NV counter id</td>
+        <td class="tdcontent"><select name="nv_counter_id">
+              <option value="1">Trusted (NV value 0-31)</option>
+              <option value="2">Non-Trusted (NV value 0-223)</option>
+            </select></td>
+            <td></td>
+    </tr>
+    <tr>
+        <td class="tdheader">NV counter value</td>
+        <td class="tdcontent"><input type="number" name="nv_counter_val" min="0" max="223" value="0" style="width: 100%;"/></td>
+        <td class="tdcontent">(0-31: Trusted, 0-223: Non-Trusted)</td>
+    </tr>
+    <tr>
+        <td class="tdheader">List of Key:</td>
+        <td class="tdcontent"><select name="key_id">
+            {% for key in key_list %}
+              <option value="{{ key.id }}"
+                {% if key.isdefault %}
+                selected
+                {% endif %}
+                >
+                {{ key.name }} 
+                {% if key.isdefault %}
+                (default)
+                {% endif %}
+                | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+              </option>
+            {% endfor %}
+            </select>
+        </td>
+        <td class="tdcontent">
+             <a href="/view_key?tool={{ signtoolname }}&keytool={{ keytoolname }}" target="_blank">View</a> 
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">Encryption mode</td>
+        <td class="tdcontent"><select name="encryption_mode">
+              <option value="1">Disable encryption</option>
+              <option value="2">Enable encryption and do not output iv</option>
+              <option value="3">Enable encryption and output iv</option>
+            </select></td>
+            <td></td>
+    </tr>
+    <tr>
+        <td class="tdheader">Encryption Key</td>
+        <td class="tdcontent"><select name="root_key_id">
+            <option value="{{ none_root_key_id }}">{{ none_root_key_id }}</option>
+            <option value="{{ default_root_key_id }}">{{ default_root_key_id }}</option>
+            {% for key in root_key_list %}
+              <option value="{{ key.id }}">
+                {{ key.name }} 
+                {% if key.isdefault %}
+                (default)
+                {% endif %}
+                | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+              </option>
+            {% endfor %}
+            </select>
+        </td>
+        <td class="tdcontent">
+             (need select encryption mode first)
+             | <a href="/view_key?tool={{ signtoolname }}&keytool={{ rootkeytoolname }}" target="_blank">View</a> 
+        </td>
+    </tr>
+</table>

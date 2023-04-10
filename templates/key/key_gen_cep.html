@@ -1,0 +1,28 @@
+{% extends "key/key_gen_base.html" %}
+
+{% block content %}
+<table>
+    <tr>
+        <td class="tdheader">Command list</td>
+        <td><select name="command" id="command">
+            {% for id,cmd in cmd_list.items() %}
+              <option value="{{ id }}">{{ cmd.id }}|{{ cmd.name }}</option>
+            {% endfor %}
+            </select>| <a href="#command" onclick="get_command_help('{{ keytool }}')">Help</a></td>
+    </tr>
+    <tr>
+        <td class="tdheader">Target sign tool:</td>
+        <td><select name="tool" multiple disable>
+            <option value="{{ toolname }}"
+            selected="selected"
+            >{{ tooldesc }}</option>
+            </td>
+    </tr>
+</table>
+
+{% endblock %}
+
+{% block script %}
+<script type=text/javascript src="{{
+    url_for('static', filename='js/gen_key.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,21 @@
+<table style="border-spacing: 0 1em;">
+    <tr>
+        <td class="tdheader">Debug-mask</td>
+        <td><select onchange="onDebugMaskChange(this)">
+            {% for val,name in debug_mask_map.items() %}
+              <option value="{{ val }}">
+                {{ val }}: {{ name }}
+              </option>
+            {% endfor %}
+            <option value="0">Custom</option>
+            </select>
+        </td>
+        <td></td>
+    </tr>
+    
+    <tr class="tr_border">
+        <td class="tdheader">Debug-mask Value:</td>
+        <td class="tdcontent"><input type="text" id="debug_mask" name="debug_mask" value='{{ default_debug_mask }}''  style='width:100%' readonly></td>
+        <td class="tdcontent"> <span>The DCU mask allowed by the OEM. 31bit mask in hex format</span></td>
+    </tr>
+</table>

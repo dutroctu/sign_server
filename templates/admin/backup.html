@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>Add user</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/w3.css') }}">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/common.css') }}">
+        <script type=text/javascript src="{{
+            url_for('static', filename='js/jquery.min.js') }}"></script>
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/common.js') }}"></script>
+        <script type=text/javascript src="{{
+            url_for('static', filename='js/backup.js') }}"></script>
+    </head>
+    <body>
+        {% include  "header.html" %}
+        {% if login %}        
+            <!-- <p>Signed in as <b><u>{{ user }}</u></b> .... <a href="/signout">Sign out</a></p> -->
+            <form  method='post' enctype="multipart/form-data" id="backup">
+                <table>
+                    <tr>
+                        <td class="tdheader">Password</td>
+                        <td><input type="text" name="password" minlength=4 maxlength=20></td>
+                    </tr>
+                </table>
+
+                <div></div>
+                <p><input type="submit" value="Submit"></p>
+            </form>
+        {% else %}
+        <div>Not login as admin yet, please login with admin account: <a href="/login">Login</a></div>
+        {% endif %}
+
+
+        <!-- Loading div -->
+        {% include  "loading.html" %}
+        <!-- result dialog div -->
+        {% include  "dialog.html" %}
+        {% include  "footer.html" %}
+    </body>
+</html>

@@ -1,0 +1,28 @@
+{% extends "sign/sign_base.html" %}
+
+{% block content %}
+<table>
+  <tr>
+    <td class="tdheader">Target Key:</td>
+    <td><select id="target_key"  name="target_key">
+        {% for key in key_list %}
+        <option value="{{ key.name }}"
+        >{{ key.project }} {{ key.model }} {{ key.target_keytool }} {{ key.name }}</option>
+        {% endfor %}
+        </select> </td>
+  </tr>
+  <tr>
+      <td class="tdheader">Sign type</td>
+      <td><select name="sign_type">
+        {% for o in sign_type_list %}
+          <option name="{{ o }}">{{ o }}</option>
+        {% endfor %}
+        </select></td>
+  </tr>
+  <tr>
+      <td class="tdheader">Hash list upload:</td>
+      <td><input type="file" name="hashlist"></td>
+  </tr>
+</table>
+
+{% endblock %}

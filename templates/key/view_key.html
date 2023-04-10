@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <title>List of Key</title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/common.css') }}">
+
+    </head>
+    <body>
+        {% include  "header.html" %}
+        {% if login %}        
+        <table border="1">
+            <tr>
+                <td class="tdheader">Id</td>
+                <td class="tdheader">Name</td>
+                <td class="tdheader">Title</td>
+                <td class="tdheader">Model</td>
+                <td class="tdheader">Project</td>
+                <td class="tdheader">Sign Tool</td>
+                <td class="tdheader">Key Tool</td>
+                <td class="tdheader">Default</td>
+                <td class="tdheader">Tag</td>
+                <td class="tdheader">Alg</td>
+                <td class="tdheader">Hint</td>
+                <td class="tdheader">Root key Id</td>
+                <td class="tdheader">Public download</td>
+            </tr>
+            {% for key in key_list %}
+            <tr name="{{ key.id }}">
+                <td class="tdheader"><a href="/keyinfo/{{ key.id }}">{{ key.id }}</a></td>
+                <td class="tdheader">{{ key.name }}</td>
+                <td class="tdheader">{{ key.title }}</td>
+                <td class="tdheader">{{ key.model }}</td>
+                <td class="tdheader">{{ key.project }}</td>
+                <td class="tdheader">{{ key.target_tool }}</td>
+                <td class="tdheader">{{ key.target_keytool }}</td>
+                <td class="tdheader">
+                    {% if key.isdefault %}
+                    Default
+                    {% else %}
+                    -
+                    {% endif %}
+
+                </td>
+                <td class="tdheader">{{ key.tag }}</td>
+                <td class="tdheader">{{ key.alg }}</td>
+                <td class="tdheader">{{ key.hint }}</td>
+                <td class="tdheader">
+                    {% if key.rootKeyId is not none %}
+                    <a href="/keyinfo/{{ key.rootKeyId }}">{{ key.rootKeyId }}</a>
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+                <td class="tdheader"><a href="/key/download/{{ key.id }}">Download</a></td>
+            </tr>
+            {% endfor %}
+            
+        </table>
+        {% else %}
+        <div>Not login yet, please login: <a href="/login">Login</a></div>
+        {% endif %}
+        {% include  "footer.html" %}
+    </body>
+</html>

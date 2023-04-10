@@ -1,0 +1,7 @@
+<div>
+    {% if login %}
+    <textarea style="width:100%;max-width:100%;box-sizing:border-box;height:50%;max-height:50%;" disabled>{{ value }}</textarea>
+    {% else %}
+    <div>Not login yet, please login: <a href="/login">Login</a></div>
+    {% endif %}
+</div>

@@ -1,0 +1,74 @@
+{% extends "sign/sign_base.html" %}
+
+{% block content %}
+<table>
+    <tr>
+        <td class="tdheader">Type:</td>
+        <td><select name="type">
+            {% for o in type_list %}
+              <option name="{{ o }}">{{ o }}</option>
+            {% endfor %}
+            </select> | <a href="#type" onclick="get_help('signtbox')">Help</a></td>
+    </tr>
+    <tr>
+        <td class="tdheader">Platform:</td>
+        <td><select name="platform">
+            {% for o in platform_list %}
+              <option name="{{ o }}">{{ o }}</option>
+            {% endfor %}
+            </select></td>
+    </tr>
+    <tr>
+        <td class="tdheader">Sign ID:</td>
+        <td><select name="sign_id">
+            {% for o in sign_id_list %}
+              <option name="{{ o }}">{{ o }}</option>
+            {% endfor %}
+            </select> | <a href="#type" onclick="get_help('signtbox')">Help</a></td>
+    </tr>
+    
+    <tr>
+        <td class="tdheader">Secure boot key:</td>
+        <td><select name="attest_key_id">
+            <option value="{{ default_key_id }}">Default</option>
+            {% for key in sb_key_list %}
+              <option value="{{ key.id }}">
+                {{ key.name }} 
+                {% if key.isdefault %}
+                (default)
+                {% endif %}
+                | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+
+
+              </option>
+            {% endfor %}
+            </select>
+             | <a href="/view_key?tool={{ toolname }}&keytool={{ attestkeytoolname }}" target="_blank">View</a> | <a href="#type" onclick="get_help('signtbox')">Help</a> | <b>WARNING: Carrefully when select DEFAULT</b>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">DM verity key:</td>
+        <td><select name="dm_key_id">
+            <option value="{{ default_key_id }}">Default</option>
+            {% for key in dm_key_list %}
+              <option value="{{ key.id }}">
+                {{ key.name }} 
+                {% if key.isdefault %}
+                (default)
+                {% endif %}
+                | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+
+
+              </option>
+            {% endfor %}
+            </select>
+             | <a href="/view_key?tool={{ toolname }}&keytool={{ dmkeytoolname }}" target="_blank">View</a> | <a href="#type" onclick="get_help('signtbox')">Help</a> | <b>WARNING: Carrefully when select DEFAULT</b>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">File upload:</td>
+        <td><input type="file" name="image"></td>
+    </tr>
+</table>
+
+{% endblock %}

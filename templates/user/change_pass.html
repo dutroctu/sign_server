@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>Change password for account {{ username }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/w3.css') }}">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/common.css') }}">
+        <script type=text/javascript src="{{
+            url_for('static', filename='js/jquery.min.js') }}"></script>
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/common.js') }}"></script>
+        <script type=text/javascript src="{{
+            url_for('static', filename='js/change_pass.js') }}"></script>
+    </head>
+    <body>
+        {% include  "header.html" %}
+        {% if login %} 
+            <!-- <p>Signed in as <b><u>{{ user }}</u></b> .... <a href="/signout">Sign out</a></p> -->
+            <form  method='post' enctype="multipart/form-data" id="change_pass">
+                <table>
+                    <tr>
+                        <td class="tdheader">User name</td>
+                        <td><input type="text" id="username" name="username" minlength=4 maxlength=30></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Old Password</td>
+                        <td><input type="password" id="oldpassword" name="oldpassword" minlength=4 maxlength=30></td>
+                    </tr>
+                    <tr>
+                    <tr>
+                        <td class="tdheader">New Password</td>
+                        <td><input type="password" id="newpassword" name="newpassword" minlength=4 maxlength=30></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Confirm new password</td>
+                        <td><input type="password" id="newpassword2" name="newpassword2" minlength=4 maxlength=30></td>
+                    </tr>
+                    <tr>
+                </table>
+                <div></div>
+                <p><input type="submit" value="Submit"></p>
+            </form>
+        {% else %}
+            <div>Not login yet, please login <a href="/login">Login</a></div>
+        {% endif %}
+
+        <!-- Loading div -->
+        {% include  "loading.html" %}
+        <!-- result dialog div -->
+        {% include  "dialog.html" %}
+        {% include  "footer.html" %}
+    </body>
+</html>

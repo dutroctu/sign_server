@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>User Management</title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/w3.css') }}">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/common.css') }}">
+
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/jquery.min.js') }}"></script>
+                <script type=text/javascript src="{{
+                    url_for('static', filename='js/common.js') }}"></script>
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/list_user.js') }}"></script>
+    </head>
+    <body>
+        {% include  "header.html" %}
+        {% if login %}
+        <div class="w3-container"><a href="/add_user" target="_blank">Add User</a></div>
+        <table border="1">
+            <tr>
+                <td class="tdheader">Id</td>
+                <td class="tdheader">Username</td>
+                <td class="tdheader">Full name</td>
+                <td class="tdheader">Account Type</td>
+                <td class="tdheader">Status</td>
+                <td class="tdheader">Created time</td>
+                <td class="tdheader">Last login</td>
+                <td class="tdheader">Default password</td>
+                <td class="tdheader"style="width:auto">Action</td>
+            </tr>
+            {% for user in user_list %}
+            <tr name="{{ user.id }}">
+                <td class="tdheader">{{ user.id }}</td>
+                <td class="tdheader"><a href="/user/{{ user.id }}" target="_blank">{{ user.username }}</a></td>
+                <td class="tdheader">{{ user.fullname }}</td>
+                <td class="tdheader">{{ user.type_str }}</td>
+                <td class="tdheader">{{ user.status_str }}</td>
+                <td class="tdheader">{{ user.created_time }}</td>
+                <td class="tdheader">{{ user.last_login_time }}</td>
+                <td class="tdheader">{{ user.default_password }}</td>
+                <td class="tdheader" style="width:auto">
+                    <a href="/edit_user/{{ user.id }}" target="_blank">Edit</a>
+                    <br>
+                    <!-- need delete state? deactive status is enough, i think -->
+                    <!-- <a href="#{{ user.id }}" onclick="delete_user('{{ user.id }}','{{ user.username }}', 0)">Delete</a>
+                    <br> -->
+                    <a href="#{{ user.id }}" onclick="reset_password('{{ user.id }}','{{ user.username }}')">Reset Password</a>
+                    <br><a href="#{{ user.id }}" onclick="delete_user('{{ user.id }}','{{ user.username }}', 1)">FORCE Delete</a>
+                    <br>
+                    {% if user.status != 1 %}
+                    <a href="#{{ user.id }}" onclick="activate_user('{{ user.id }}','{{ user.username }}', 1)">Active</a>
+                    {% else %}
+                    <a href="#{{ user.id }}" onclick="activate_user('{{ user.id }}','{{ user.username }}', 0)">Deactive</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            
+        </table>
+        {% else %}
+        <div>Not login as admin yet, please login as user admin: <a href="/login">Login</a></div>
+        {% endif %}
+
+        <!-- Loading div -->
+        {% include  "loading.html" %}
+        <!-- result dialog div -->
+        {% include  "dialog.html" %}
+        {% include  "footer.html" %}
+    </body>
+</html>

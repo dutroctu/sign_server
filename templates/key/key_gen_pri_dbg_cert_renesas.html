@@ -1,0 +1,100 @@
+{% extends "key/key_gen_base.html" %}
+
+{% block content %}
+
+<fieldset>
+    <legend>Debug info</legend>
+    {% include  "key/key_gen_renesas_dbg.html" %}
+</fieldset>
+<fieldset>
+    <legend>Primary key info</legend>
+<table style="border-spacing: 0 1em;">
+
+    <tr>
+        <td class="tdheader">{{key_title}}:</td>
+        <td class="tdcontent"><select name="cert-keypair">
+            {% for key in root_key_list %}
+              <option value="{{ key.id }}"
+                {% if key.isdefault %}
+                selected
+                {% endif %}
+                >
+                {{ key.name }} 
+                {% if key.isdefault %}
+                (default)
+                {% endif %}
+                | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+              </option>
+            {% endfor %}
+            </select>
+        </td>
+        <td class="tdcontent">
+             <a href="/view_key?tool={{ signtoolname }}&keytool={{ keytoolname }}" target="_blank">View</a> 
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">Target sign tool:</td>
+        <td><select name="tool" multiple>
+            <option value="{{ toolname }}"
+            selected="selected"
+            >{{ tooldesc }}</option>
+            </td>
+    </tr>
+
+    <tr>
+        <td class="tdheader">Lifecycle States (LCS):</td>
+        <td class="tdcontent"><input type="number" name="lcs_value" value="2" style="width: 100%;" readonly/></td>
+        <td class="tdcontent"> <span>The LCS that this certificate is intended for</span></td>
+    </tr>
+    <tr class="tr_border">
+        <td class="tdheader">Boot Public Key ID (HBK-ID):</td>
+        <td class="tdcontent"><input type="number" name="hbk_id_value" value="2" style="width: 100%;" readonly/></td>
+        <td class="tdcontent"> <span>The ID of the OTP memory HBK field, that the public key of
+            this certificate will be verified against</span></td>
+    </tr>
+</table>
+
+</fieldset>
+
+<div>
+    <fieldset>
+        <legend>Next cert public key</legend>
+        <div style="margin-bottom: 1em;margin-top: 1em;"> In case you need re-used existing key, or manual upload keypair, you can use those parameter.
+            <br/>If not, let all blank/none, new keypair will be generated</div>
+            
+    <table>
+        
+        <tr>
+            <td class="tdheader">Select existing keycert:</td>
+            <td><select name="next-cert-pubkey">
+                <option value="{{ default_cert_key_id }}">{{ default_cert_key_id }}</option>
+                {% for key in key_cert_list %}
+                  <option value="{{ key.id }}">
+                    {{ key.name }} 
+                    {% if key.isdefault %}
+                    (default)
+                    {% endif %}
+                    | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+                  </option>
+                {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdheader">Upload keys (pub+priv):</td>
+            <td><input type="file" name="next-cert-pubkey"> (if <b>not use</b> key in above list, if <b>NONE</b> are use, auto generate new keypair)</td>
+        </tr>
+        <tr><td></td><td>Uploading key will <b>override</b> selected key in list</td></tr>
+        <tr>
+            <td class="tdheader">Password</td>
+            <td><input type="password" name="next-cert-pubkey-pwd">  (if auto generate new keypair)</td>
+        </tr>
+    </table>
+</fieldset>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type=text/javascript src="{{
+    url_for('static', filename='js/key_gen_pri_dbg.js') }}"></script>
+{% endblock %}

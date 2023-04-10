@@ -1,0 +1,22 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      PYTHONUNBUFFERED: "1"
+      FLASK_ENV: "development"
+      MONGO_URI: "mongodb://vfsigner:vfsigner@localhost:27017/vfsimplesigning"
+    depends_on:
+      - db
+  db:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: r0ot@31
+    volumes:
+      - ./mongo-init-scripts:/docker-entrypoint-initdb.d/
+    ports:
+      - "27017:27017"

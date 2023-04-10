@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Add user</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/w3.css') }}">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/common.css') }}">
+        <script type=text/javascript src="{{
+            url_for('static', filename='js/jquery.min.js') }}"></script>
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/common.js') }}"></script>
+        <script type=text/javascript src="{{
+            url_for('static', filename='js/backup.js') }}"></script>
+    </head>
+    <body>
+        {% include  "header.html" %}
+        <h3> LOG FILES</h3>
+        {% if login %}        
+            {% for id,log in loglist.items() %}
+                <ul> <a href='log/{{ id }}'>{{ log.desc }}</a>, {{log.size/1024}} Kb({{log.size}} bytes), Last modified {{ log.last_update_time }}</ul>
+            {% endfor %}
+        {% else %}
+        <div>Not login as admin yet, please login with admin account: <a href="/login">Login</a></div>
+        {% endif %}
+
+
+        <!-- Loading div -->
+        {% include  "loading.html" %}
+        <!-- result dialog div -->
+        {% include  "dialog.html" %}
+        {% include  "footer.html" %}
+    </body>
+</html>

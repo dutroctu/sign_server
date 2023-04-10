@@ -1,0 +1,189 @@
+{% extends "sign/sign_base.html" %}
+
+{% block content %}
+<span style="font-size: large; background-color: yellow;">
+    <a href="#type" onclick="get_help('signrenesas_ic')">Get Help</a> |
+    <a href="#type" onclick="get_help('restapi_renesas_ic')">Rest API</a>
+</span>
+<fieldset>
+    <legend>Renesas Content Certification param</legend>
+    {% include  "sign/renesas_content_cert_param.html" %}
+</fieldset>
+<fieldset>
+    <legend>Image create param</legend>
+    <table style="border-spacing: 0 1em;">
+    <tr>
+        <td class="tdheader">Paramers</td>
+        <td class="tdcontent"><select id="boot_param" name="boot_param">
+            {% for param in boot_param_list %}
+            {% if param.isdefault %}
+              <option value="{{ param.id }}" selected>
+                {{ param.binary_type }} : {{ param.name }}
+                (default) ({{ param.source }})
+              </option>
+            {% else %}
+              <option value="{{ param.id }}">
+                {{ param.binary_type }} : {{ param.name }} ({{ param.source }})
+              </option>
+            {% endif %}
+            {% endfor %}
+            </select> 
+        </td>
+        <td class="tdcontent">
+             
+            <a href="/renesas_ic_param" target="_blank">View List</a>
+            | <a href="#" onclick="get_help_cmd('{{ toolname }}', 'memory_map')">Memory map</a>
+            | <a href="#" onclick="downloadfile('{{ toolname }}', null)">Download</a> 
+            | <a href="#" onclick="get_help_cmd('{{ toolname }}')">Help</a>
+            <br/>
+            <span>
+                Use "Custom Param" to modify infor of selected param
+            </span>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">Firmware files</td>
+        <td><input type="file" name="image" style="width: 100%;" multiple>
+        </td>
+        <td class="tdcontent">
+        Support to upload multiple files, if zip file is uploaded, it will be unzipped
+        <br/>
+        File names need to follow <a href="#" onclick="get_help_cmd('{{ toolname }}', 'memory_map')">Memory map</a> of selected parameter
+    </td>
+    </tr>
+    <tr>
+        <td class="tdheader">File mapping</td>
+        <td class="tdcontent">
+            <textarea id="file_mapping" name="file_mapping" cols="50" rows="5" placeholder="bl2-vf-b2-ecockpit-4x2g bl2" style="width: 100%;"></textarea></td>
+
+        <td class="tdcontent"> 
+            Used if filename of uploaded binaries is different from one in <a href="#" onclick="get_help_cmd('{{ toolname }}', 'memory_map')">Memory map</a>
+            <br/>
+            File name not include extention. If bank default in memory map will be used
+            <br/>
+            <span class="code">
+            &lt;File name without ext&gt; &lt;module (bl2, bl3, ..)&gt;
+            <br/> Example:
+            <br/>
+            bl2-vf-b2-ecockpit-4x2g bl2
+            <br/>
+            u-boot-elf-vf-b2 bl32
+        </span>
+        </td>
+        </td>
+    </tr>
+</table>
+</fieldset>
+    <fieldset>
+        <legend>Custom param for image create</legend>
+    <span style="font-size: large;">
+        Information below will replace default value of selected param
+    </span>
+    <table id="tbl_upload_ind" class="table_border">
+        <tr class="tr_border">
+            <td class="tdheader">Memory maps</td>
+            <td class="tdcontent"><textarea id="custom_map" name="custom_map" cols="50" rows="5" placeholder="bl2-vf-b2-ecockpit-4x2g.bin bl2 0x00000000E6304000 0x00000000E6304000"></textarea></td>
+            <td class="tdcontent">
+                <a href="#custom_map" onclick="get_help_cmd('{{ toolname }}', 'memory_map')">View</a>
+                <br/>
+                <span class="code">
+                &lt;File name&gt; &lt;target (bl1, bl2, bl3, ...)&gt; &lt;64b mem load addr (hex)&gt; &lt;64b mem load addr (hex)&gt; (&lt;64b vma addr (hex)&gt;)
+                <br/> Example:
+                <br/>
+                bl2-vf-b2-ecockpit-4x2g.bin bl2 0x00000000E6304000 0x00000000E6304000
+                <br/>
+                u-boot-elf-vf-b2.bin bl32 0x0000000050000000 0x0000000050000000
+            </span>
+            </td>
+        </tr>
+        <tr class="tr_border">
+            <td class="tdheader">Boot binary</td>
+            <td class="tdcontent"><input type="file" id="custom_boot_file" name="custom_boot_file" multiple></td>
+            <td class="tdcontent"> <a href="#custom_boot_file" onclick="downloadfile('{{ toolname }}', 'boot_bin')">Download</a> </td>
+        </tr>
+        <tr class="tr_border">
+            <td class="tdheader">Boot Param</td>
+            <td class="tdcontent"><textarea id="custom_param" name="custom_boot_param" cols="50" rows="5" placeholder="sb_key_cert.bin 00000B00"></textarea></td>
+            <td class="tdcontent">
+                <a href="#custom_param" onclick="get_help_cmd('{{ toolname }}', 'boot_param')">View</a>
+                <br/>
+                <span class="code">
+                &lt;File name&gt; &lt;File offset (hex)&gt;
+                <br/> Example:
+                <br/>
+                sb_key_cert.bin 00000B00
+                <br/>
+                bootrom_param.bin 00000000
+            </span>
+            </td>
+        </tr>
+
+        <tr class="tr_border">
+            <td class="tdheader">Cert header binary</td>
+            <td class="tdcontent"><input type="file" name="custom_cert_file"> </td>
+            <td class="tdcontent">
+                <a href="#custom_boot_file" onclick="downloadfile('{{ toolname }}', 'cert_bin')">Download</a>
+                <br/>
+                <b><u>NOTICE:</u></b> Not Applicable for Flash writer</td>
+        </tr>
+        <tr class="tr_border">
+            <td class="tdheader">Cert header Param</td>
+            <td class="tdcontent"><textarea id="custom_cert_param" name="custom_cert_param" cols="50" rows="5"  placeholder="bl31_cert.bin 00000400"></textarea></td>
+        
+            <td class="tdcontent">
+                <a href="#custom_cert_param" onclick="get_help_cmd('{{ toolname }}', 'cert_param')">View</a>
+                <br/>
+                <span class="code">
+                &lt;File name&gt; &lt;File offset (hex)&gt;
+                <br/> Example:
+                <br/>
+                bl33_image_num.bin 00000000
+                <br/>
+                sb_key_cert.bin 00000B00
+            </span>
+            </td>
+        </tr>
+        <tr class="tr_border">
+            <td class="tdheader">Adjust VMA (Hex)</td>
+            <td class="tdcontent"><input type="text" id="adjust_vma" name="adjust_vma"   style='width:100%' placeholder="{{ default_adjust_vma }}"></input> </td>
+            <td class="tdcontent"></td>
+        </tr>
+        <tr class="tr_border">
+            <td class="tdheader">Platform</td>
+            <td class="tdcontent"><input type="text" id="custom_platform" name="custom_platform"   style='width:100%' value="{{ default_platform }}" disabled></input> </td>
+            <td class="tdcontent"></td>
+        </tr>
+        <tr class="tr_border">
+            <td class="tdheader">Save</td>
+            <td class="tdcontent"> 
+                <label><input type="checkbox" id="save_new_param" name="save_new_param" onchange="on_save_change(this.checked)">Check to save as new param</input></label> 
+            </td>
+            <td class="tdcontent">
+                <span>
+                    All information in selected param will be cloned to this new one.
+                    <br/>
+                    New information if set will replace old one
+                    <br/>
+                    New param will be saved when signing succeeds
+                </span>
+            </td>
+        </tr>
+        <tr class="tr_border">
+            <td class="tdheader">Name</td>
+            <td class="tdcontent"><input type="text" id="custom_name" name="custom_name"   style='width:100%' disabled></input> </td>
+            <td class="tdcontent"></td>
+        </tr>
+        <tr class="tr_border">
+            <td class="tdheader">Description</td>
+            <td class="tdcontent"><textarea type="text" id="custom_desc" name="custom_desc"  style='width:100%' rows="5" disabled></textarea> </td>
+            <td class="tdcontent"><a href="#custom_desc" onclick="get_help_cmd('{{ toolname }}', 'help')">View</a></td>
+        </tr>
+    </table>
+</fieldset>
+
+
+{% endblock %}
+{% block script %}
+<script type=text/javascript src="{{
+    url_for('static', filename='js/sign_renesas_ic.js') }}"></script>
+{% endblock %}

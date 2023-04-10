@@ -1,0 +1,76 @@
+{% extends "sign/sign_base.html" %}
+
+{% block content %}
+<span style="font-size: large; background-color: yellow;">
+    <a href="#type" onclick="get_help('signrenesas')">Get Help</a> |
+    <a href="#type" onclick="get_help('restapi_renesas')">Rest API</a>
+</span>
+
+{% include  "sign/renesas_content_cert_param.html" %}
+<div>
+    <table id="tbl_upload_ind">
+    <tr class="tr_border">
+        <td class="tdheader">Adjust VMA (Hex)</td>
+        <td class="tdcontent"><input type="text" id="adjust_vma" name="adjust_vma"   style='width:100%' placeholder="{{ default_adjust_vma }}"></input> </td>
+        <td class="tdcontent"><span>VMA for ouput content certificate, when convert bin to srec</span></td>
+    </tr>
+    
+    <tr class="tr_border">
+        <td class="tdheader">Include input</td>
+        <td class="tdcontent"> 
+            <label><input type="checkbox" id="include_in_bin" name="include_in_bin">Include uploaded binaries in output files</input></label> 
+        </td>
+        <td class="tdcontent">
+            
+        </td>
+    </tr>
+</table>
+</div>
+<div id="div_upload_ind">
+        <fieldset>
+            <legend>Files </legend>
+            <span> <b><u>NOTICES:</u></b> Certificate file will be generated basing on Program top address File. File name is follows Program top address finel name (i.e image.tbl --> image.cert)</span>
+            <br/>
+            <br/>
+        <table id="tbl_upload_ind" border="1">
+            <tr>
+                <td class="tdheader">Program file</td>
+                <td class="tdheader">Program top address file  (tbl)</td>
+                <td class="tdheader">Memory load address (hex)</td>
+                <td class="tdheader">Flash store address (hex)</td>
+            </tr>
+            <tr>
+                <td><input type="file" name="image" multiple>
+                <br/>(multiple files, zip file will be unzipped)</td>
+                <td> 
+                    <input type="file" name="image_tbl">
+                    <br/> (multiple file, zip file will be unzipped)</td>
+                <td><input type="text" name="image_mem" placeholder="0x00000000E6304000"> 
+                <br/>(same for all selected binary files)</td>
+                <td><input type="text" name="image_flash" placeholder="0x00000000E6304000">
+                <br/> (if blank, value of Memory load address will be used) </td>
+            </tr>
+        </table>
+        
+    </fieldset>
+</div>
+<div>
+    <ul>Sample for using RestAPI: <a href="/res/signrenesas">signrenesas</a> | <a href="/help/restapi_renesas">Help</a></ul>
+    <ul>Sample code to integrate to build script:<a href="/res/mhu_yocto_script_build_sign">mhu_yocto_script_build_sign</a></ul>
+    <ul>Output: 
+        <ul>- <b>binaries/*: Contains binaries to be flashed (include srec, binaries, added padding if any)</b></ul>
+        <ul>- <b>&lt;tbl file name&gt;.cert: Generated content certification</b></ul>
+        <ul>- &lt;tbl file name&gt;.cert.srec: Generated content certification (srec format)</ul>
+        <ul>- &lt;tbl file name&gt;.hash: Hashout of content certification</ul>
+        <ul>- &lt;tbl file name&gt;._Cert.txt: array of char of content certificate</ul>
+        <ul>- &lt;tbl file name&gt;.tbl: Program address table of uploaded binaries</ul>
+        <ul>- sb_key_cert.bin: Key certificate used to sign</ul>
+        <ul>- sb_cnt_cert.cfg: Configuration used to sign</ul>
+        <ul>- uploaded_bin/*: Contains uploaded binaries (if "Include input" is selected)</ul>
+    </ul>
+</div>
+{% endblock %}
+{% block script %}
+<script type=text/javascript src="{{
+    url_for('static', filename='js/sign_renesas.js') }}"></script>
+{% endblock %}

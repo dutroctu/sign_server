@@ -1,0 +1,135 @@
+{% extends "sign/sign_base.html" %}
+
+{% block content %}
+<span style="font-size: large; background-color: yellow;">
+    <a href="#type" onclick="get_help('signprovision')">Get Help</a> |
+    <a href="#type" onclick="get_help('restapi_provision')">Rest API</a>
+</span>
+<table>
+    <tr>
+        <td class="tdheader">VinFast root key:</td>
+        <td><select name="vf_key_id">
+            {% for key in vf_key_list %}
+                {% if key.isdefault %}
+                <option value="{{ key.id }}" selected>
+                    {{ key.name }} (default)
+                    | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+                </option>
+                {% else %}
+                <option value="{{ key.id }}">
+                    {{ key.name }}
+                    | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+                </option>
+                {% endif %}
+            {% endfor %}
+            </select>
+             | <a href="/view_key?tool={{ toolname }}&keytool={{ vinfast_key }}" target="_blank">View</a> | <a href="#type" onclick="get_help('signprovision')">Help</a> | <b>WARNING: Carrefully when select DEFAULT</b>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">OEM keyset:</td>
+        <td><select name="oem_key_id">
+            {% for key in oem_key_list %}
+                {% if key.isdefault %}
+                <option value="{{ key.id }}" selected>
+                    {{ key.name }} (default)
+                    | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+                </option>
+                {% else %}
+                <option value="{{ key.id }}">
+                    {{ key.name }}
+                    | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+                </option>
+                {% endif %}
+            {% endfor %}
+            </select>
+             | <a href="/view_key?tool={{ toolname }}&keytool={{ oem_key }}" target="_blank">View</a> | <a href="#type" onclick="get_help('signprovision')">Help</a> | <b>WARNING: Carrefully when select DEFAULT</b>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">FOTA Encryption key:</td>
+        <td><select name="fota_enc_key_id">
+            {% for key in fota_enc_key_list %}
+                {% if key.isdefault %}
+                <option value="{{ key.id }}" selected>
+                    {{ key.name }} (default)
+                    | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+                </option>
+                {% else %}
+                <option value="{{ key.id }}">
+                    {{ key.name }}
+                    | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+                </option>
+                {% endif %}
+              </option>
+            {% endfor %}
+            </select>
+             | <a href="/view_key" target="_blank">View</a> | <a href="#type" onclick="get_help('signing')">Help</a> | <b>WARNING: Carrefully when select DEFAULT</b>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">FOTA Sign key:</td>
+        <td><select name="fota_sign_key_id">
+            {% for key in fota_sign_key_list %}
+                {% if key.isdefault %}
+                <option value="{{ key.id }}" selected>
+                    {{ key.name }} (default)
+                    | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+                </option>
+                {% else %}
+                <option value="{{ key.id }}">
+                    {{ key.name }}
+                    | title: {{ key.title }}| model: {{ key.model }} | project: {{ key.project }}
+                </option>
+            {% endif %}
+            {% endfor %}
+            </select>
+             | <a href="/view_key" target="_blank">View</a> | <a href="#type" onclick="get_help('signing')">Help</a> | <b>WARNING: Carrefully when select DEFAULT</b>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdheader">Endpoint:</td>
+        <td><select id="endpointid" name="endpointid">
+            {% for id,endpoint in endpoint_list.items() %}
+            {% if endpoint.is_default %}
+              <option value="{{ endpoint.id }}" selected>
+                {{ endpoint.id }}: {{ endpoint.name }}
+                (default) | ({{ endpoint.addr }})
+              </option>
+            {% else %}
+              <option value="{{ endpoint.id }}">
+                {{ endpoint.id }}: {{ endpoint.name }}
+                | ({{ endpoint.addr }})
+              </option>
+            {% endif %}
+            {% endfor %}
+            </select> 
+        </td>
+    </tr>
+    
+    <tr class="tr_border">
+        <td class="tdheader">Endpoint addr (override above select)</td>
+        <td class="tdcontent"><input type="text" id="endpointaddr" name="endpointaddr"  style='width:100%'></input> </td>
+        <td class="tdcontent"></td>
+    </tr>
+    <!-- TODO: allow to upload/change endpoint url and CA 
+        <tr>
+        <td class="tdheader">CSR</td>
+        <td><textarea id="custom_map" name="custom_map" cols="50" rows="5"></textarea> (not use if file upload is used)</td>
+    </tr>
+    <tr>
+        <td class="tdheader">CSR File upload:</td>
+        <td><input type="file" name="image"></td>
+    </tr> -->
+    
+    <tr>
+        <td class="tdheader">CSR File upload:</td>
+        <td><input type="file" name="image"></td>
+    </tr>
+    <tr>
+        <td class="tdheader">CSR</td>
+        <td><textarea id="csr" name="csr" cols="50" rows="5"></textarea> (not use if file upload is used)</td>
+    </tr>
+</table>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Admin</title>
+    </head>
+    <body>
+        {% include  "header.html" %}
+        <br/>
+        <br/>
+        {% if  login %}
+        
+        <!-- <p>Signed in as <b><u>{{ user }}</u></b> .... <a href="/signout">Sign out</a></p> -->
+            <ul><a href="/users" target="blank">User management</a></ul>
+            <ul><a href="/backup" target="blank">Backup data</a></ul>
+            <ul><a href="/manage_key" target="blank">Key Management</a></ul>
+            <ul><a href="/log" target="blank">Log</a></ul>
+            <ul><a href="/admin/monitorstorage" target="blank">Monitor storage</a></ul>
+            <!-- <ul><a href="/keys" target="blank">Key Management</a></ul>
+            <ul><a href="/databases" target="blank">Database management</a></ul>
+            <ul><a href="/storages" target="blank">Storage management</a></ul>
+            <ul><a href="/systems" target="blank">System Management</a></ul> -->
+        {% else %}
+            <div>Not login as admin yet, please login with admin account: <a href="/login">Login</a></div>
+        {% endif %}
+        {% include  "footer.html" %}
+    </body>
+</html>

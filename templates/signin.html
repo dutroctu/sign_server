@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <title>Login</title>
+        <style>
+            fieldset {
+                display: block;
+                margin-left: 2px;
+                margin-right: 2px;
+                margin-top: 10px;
+                padding-top: 0.35em;
+                padding-bottom: 0.625em;
+                padding-left: 0.75em;
+                padding-right: 0.75em;
+                border: 2px groove (internal value);
+            }
+            
+            legend {
+              background-color: gray;
+              color: white;
+              padding: 5px 10px;
+            }
+            
+            input {
+              margin: 5px;
+            }
+            
+            select {
+              width:  500px;
+            }
+            .tdheader {
+                width:  100px;
+            }
+            </style>
+    </head>
+    <body>
+        {% include  "header.html" %}
+        {% if login %}        
+            <div>Login as: <a href="/userinfo/{{username}}">{{username}}</a></div>
+        {% else %}
+            <!-- <p>Signed in as <b><u>{{ user }}</u></b> .... <a href="/signout">Sign out</a></p> -->
+            <form  method='post' enctype="multipart/form-data">
+                <table>
+                    <tr>
+                        <td class="tdheader">User name</td>
+                        <td><input type="text" name="username"></td>
+                    </tr>
+                    <tr>
+                        <td class="tdheader">Password</td>
+                        <td><input type="password" name="password"></td>
+                    </tr>
+                    <tr>
+                </table>
+                <div></div>
+                <p><input type="submit" value="Submit"></p>
+            </form>
+        {% endif %}
+        {% include  "footer.html" %}
+    </body>
+</html>

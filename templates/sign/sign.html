@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <title>Manual signing</title>
+    </head>
+    <body>
+        {% include  "header.html" %}
+        <br/>
+        <br/>
+        {% if  login %}
+        
+        <!-- <p>Signed in as <b><u>{{ user }}</u></b> .... <a href="/signout">Sign out</a></p> -->
+            List of supported signing:
+            {% for module, desc in modules.items() %}
+            <ul><a href="/sign/{{ module }}">{{ desc }}</a></ul>
+            {% endfor %}
+        {% else %}
+            <div>Not login yet, please login: <a href="/login">Login</a></div>
+        {% endif %}
+    </body>
+</html>

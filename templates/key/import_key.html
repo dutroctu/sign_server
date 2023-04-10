@@ -1,0 +1,49 @@
+{% extends "key/key_gen_base.html" %}
+{% block script %}
+<script type=text/javascript src="{{
+    url_for('static', filename='js/import_key.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<table>
+
+    <tr>
+        <td class="tdheader">Target sign tool:</td>
+        <td><select name="tool" multiple>
+            {% for name,desc in tool_list.items() %}
+
+            <option value="{{ name }}"
+            >{{ desc }}</option>
+            {% endfor %}
+            </select> <a href="#type" onclick="get_help('importkey')">Help</a></td>
+    </tr>
+    
+    <tr>
+        <td class="tdheader">Target Key tool:</td>
+        <td><select id="keytool" name="keytool" multiple>
+            {% for name,desc in keytool_list.items() %}
+
+            <option value="{{ name }}"
+            >{{ desc[1] }}</option>
+            {% endfor %}
+            </select> <a href="#type" onclick="get_help('importkey')">Help</a> | <a href="#type" onclick="get_import_help()">Require key</a> </td>
+    </tr>
+</table>
+
+<div>
+    <fieldset>
+        <legend>Key File</legend>
+    <table>
+        <tr>
+            <td class="tdheader">File</td>
+            <!-- <td><input type="file" name="files" multiple="true" id="multiFiles"></td> -->
+            <td><input type="file" name="files" id="files" multiple="true"> <a href="#type" onclick="get_help('importkey')">Help</a> | <b>NOTICE: If zip file, will be extracted when using </b></td>
+        </tr>
+        <tr>
+            <td class="tdheader">Password</td>
+            <td><input type="password" name="password"></td>
+        </tr>
+    </table>
+</fieldset>
+
+{% endblock %}

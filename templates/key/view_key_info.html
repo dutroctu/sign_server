@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <title>Edit Key</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/w3.css') }}">
+        <link rel="stylesheet" href="{{
+            url_for('static', filename='css/common.css') }}">
+        <script type=text/javascript src="{{
+            url_for('static', filename='js/jquery.min.js') }}"></script>
+            <script type=text/javascript src="{{
+                url_for('static', filename='js/common.js') }}"></script>
+        <script type=text/javascript src="{{
+            url_for('static', filename='js/edit_key.js') }}"></script>
+    </head>
+    <body>
+        {% include  "header.html" %}
+        {% if login %}        
+            <table>
+                <tr>
+                    <td class="tdheader">ID</td>
+                    <td>{{ key.id }}</td>
+                </tr>
+                <tr>
+                    <td class="tdheader">Root keyID</td>
+                    <td>
+                        {% if key.rootKeyId is not none %}
+                        <a href="/keyinfo/{{ key.rootKeyId }}">{{ key.rootKeyId }}</a>
+                        {% else %}
+                        -
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdheader">Name</td>
+                    <td>{{ key.name }}</td>
+                </tr>
+                <tr>
+                    <td class="tdheader">Title</td>
+                    <td>{{ key.title }}</td>
+                </tr>
+                <tr>
+                    <td class="tdheader">Status</td>
+                    <td>{{ status }}</td>
+                </tr>
+                <tr>
+                    <td class="tdheader">Project</td>
+                    <td>{{ key.project }}</td>
+                </tr>
+                <tr>
+                    <td class="tdheader">Model</td>
+                    <td>{{ key.model }}</td>
+                </tr>
+                <tr>
+                    <td class="tdheader">Sign tool</td>
+                    <td>{{ key.target_tool }}</td>
+                </tr>
+                <tr>
+                    <td class="tdheader">Key Tool</td>
+                    <td>{{ key.target_keytool }}</td>
+                </tr>
+                <tr>
+                    <td class="tdheader">History</td>
+                    <td><textarea name="history" cols="50" rows="5" disabled>{{ key.history }}</textarea></td>
+                </tr>
+                <tr>
+                    <td class="tdheader">Key info status</td>
+                    <td><textarea name="key_info_status" cols="50" rows="5" disabled>{{ key_info_status }}</textarea></td>
+                </tr>
+                
+            </table>
+            <a href="/key/download/{{ key.id }}">Download public key file</a>
+            
+        {% else %}
+        <div>Not login yet, please login: <a href="/login">Login</a></div>
+        {% endif %}
+
+
+        <!-- Loading div -->
+        {% include  "loading.html" %}
+        <!-- result dialog div -->
+        {% include  "dialog.html" %}
+        {% include  "footer.html" %}
+    </body>
+</html>

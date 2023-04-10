@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>Key Management</title>
+    </head>
+    <body>
+        {% include  "header.html" %}
+        <br/>
+        <br/>
+        {% if  login %}
+        
+            <ul><a href="/view_key">View Keys</a></ul>
+            
+            {% if loginadmin %}
+                {% for name, desc in import_tool_list.items() %}
+                    {% if desc[1] is not none %}
+                        <ul><a href="/import_key/{{ name }}">{{ desc[1] }}</a></ul>
+                    {% endif %}
+                {% endfor %}
+                
+                <ul>Generate key
+                {% for name, desc in key_tool_list.items() %}
+                    {% if desc[1] is not none %}
+                        <ul><a href="/genkey/{{ name }}">{{ desc[1] }}</a></ul>
+                    {% endif %}
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% else %}
+            <div>Not login yet, please login: <a href="/login">Login</a></div>
+        {% endif %}
+        {% include  "footer.html" %}
+    </body>
+</html>
