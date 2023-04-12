@@ -17,7 +17,7 @@ import atexit
 import traceback
 import json
 
-PORT = 8888
+PORT = 5000
 DBPORT = 9999
 
 TAG = "app"
@@ -189,8 +189,10 @@ class AppConfig:
         from server.app import ROOT_DIR
         path = self.data_dir
         if self.data_dir.startswith("/"):
+            logD("getDataPath  %s" % data_dir)
             path =  self.data_dir if childPath is None else os.path.join(self.data_dir, childPath)
         else:
+            logD("ROOT_DIR  %s" % ROOT_DIR)
             path = os.path.join(ROOT_DIR, self.data_dir) if childPath is None else os.path.join(ROOT_DIR, self.data_dir, childPath)
         return path
 

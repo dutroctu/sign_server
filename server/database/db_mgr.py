@@ -153,13 +153,15 @@ class DatabaseMgr(IBackup):
 
         # config db
         app.config['MONGODB_SETTINGS'] = {
-            'db': self.dbName,
-            'host': 'mongodb://localhost/%s' % (self.dbName), # FIXME: localhost is suitable???
-            'username':dbusr, # username/password to login to mongodb
-            'password':dbpass
+            'db': 'vfsimplesigning',
+            'host': 'mongodb',
+            'port': 27017,
+            'username': 'root',
+            'password': 'r0ot@31',
+            'authentication_source': 'admin',
+            'authentication_mechanism': 'SCRAM-SHA-1'   
         }
 
-        
         try:
             # init db
             db.init_app(app)

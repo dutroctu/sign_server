@@ -11,7 +11,8 @@
 import multiprocessing
 
 import gunicorn.app.base
-
+from gunicorn import glogging
+from gunicorn.workers import gthread
 
 CERT_ENV="CERT"
 CERT_KEY_ENV="CERT_KEY"
@@ -76,6 +77,7 @@ PARAM_LONG_ARG = {
     }
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+print ("\ROOT_DIR: %s file %s" % (ROOT_DIR, __file__))
 
 def printHelp():
     print ("\nCommand:")
@@ -88,6 +90,8 @@ def printHelp():
     print ("\n")
 
 if __name__ == '__main__':
+    print(__name__)
+
     # print("Hello from server")
     from server import app
     from server.app import DEBUG
@@ -175,6 +179,12 @@ if __name__ == '__main__':
     filekey = os.getenv(filekey_env) if filekey_env is not None else None
     dbUser = os.getenv(dbUser_env) if dbUser_env is not None else None
     dbPass = os.getenv(dbPass_env) if dbPass_env is not None else None
+
+    dbUser = "root"
+    dbPass = "r0ot@31"
+    dbName = "vfsimplesigning"
+
+    logD("dbUser %s" % dbUser)
 
     if (DEBUG): logD("!!!!!!!!!!!APP IS STARTED IN DEBUG MODE!!!!!!!!!!!")
     if (DEBUG): logD("!!!!!!!!!!!APP IS STARTED IN DEBUG MODE!!!!!!!!!!!")

@@ -66,6 +66,7 @@ if hasattr(sys, '_MEIPASS'):
 STATIC_FOLDER = os.path.join(BASE_DIR, 'static')
 TEMPLATE_FOLDER = os.path.join(BASE_DIR, 'templates')
 
+log("TEMPLATE_FOLDER %s" % TEMPLATE_FOLDER)
 
 #global object 
 app = Flask(__name__, template_folder=TEMPLATE_FOLDER, static_folder=STATIC_FOLDER)
@@ -324,7 +325,7 @@ def create_app(dbusr=None, dbpass=None, db=None, file=None, workingdir=ROOT_DIR,
     filekey=file
     global ROOT_DIR
     ROOT_DIR=workingdir if workingdir is not None else ROOT_DIR
-    # log("ROOT_DIR %s" % ROOT_DIR)
+    log("ROOT_DIR %s" % ROOT_DIR)
     
     global DEFAULT_APP_CONFIG_FILE
     DEFAULT_APP_CONFIG_FILE = os.path.join(ROOT_DIR, "config.json")
