@@ -12,7 +12,7 @@ RUN pip install -r requirements.txt
 # Copy app files
 COPY . /app
 
-RUN pyinstaller --onefile --add-data "templates/*:templates" --add-data "static/*:static" serverapp.py
+RUN pyinstaller --onefile --clean --add-data "templates:templates" --add-data "static:static" serverapp.py
 
 RUN ls -l dist
 RUN ls -l /tmp
